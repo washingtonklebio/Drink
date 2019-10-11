@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports: 
+      - "8080:80"
+    volumes:
+      - ./:/usr/share/nginx
+    networks: 
+      - app-network
+    depends_on:
+      - "mysql-app"
+      
+  mysql-app:
+    image: mysql:8.0
+    ports: 
+      - "3377:3306"
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - .docker/dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: drink
+      MYSQL_ROOT_PASSWORD: 1q2w3e4r
+    networks: 
+      - app-network
+
+networks: 
+  app-network:
+    driver: bridge
