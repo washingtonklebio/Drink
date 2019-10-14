@@ -5,12 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: {
-            name: 'washington', 
-            email: 'washingtonkle@gmail.com'
-        }
+        // user: {
+        //     name: 'washington', 
+        //     email: 'washingtonkle@gmail.com'
+        // }
+
+        user: null
     },
     mulations: {
-
+        setUser(state, user) {
+            state.user = user
+            if(user) {
+                axios.defaults.headers.common['Authorization'] = `bearer ${user.token}`
+            } else {
+                delete axios.defaults.headers.common['Authorization']
+            }
+        }
     }
 })

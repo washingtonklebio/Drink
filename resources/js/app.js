@@ -4,6 +4,7 @@ window.axios = require("axios")
 window.Vue = require('vue')
 
 import store from './config/store'
+import router from './config/router'
   
 import 'font-awesome/css/font-awesome.css'
 import '@mdi/font/css/materialdesignicons.css'
@@ -21,10 +22,8 @@ Vue.use(Vuetify,{ iconfont: 'mdi' })
 
 new Vue({
     store,
+    router,
     vuetify: new Vuetify(),
-    data:{
-
-	},
     render: h => h(app),
 	mounted(){
 	}

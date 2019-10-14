@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     use AuthenticatesUsers;
 
-    public function login (Request $request) {
+    public function signin (Request $request) {
         $this->validateLogin($request);
         
         $credentials = $this->credentials($request);
@@ -18,6 +18,10 @@ class AuthController extends Controller
         $token = \JWTAuth::attempt($credentials);
 
         return $this->responseToken($token);
+    }
+
+    public function signup (Request $request) {
+
     }
 
     private function responseToken($token) {

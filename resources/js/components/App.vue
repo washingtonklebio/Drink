@@ -3,14 +3,15 @@
 		<Menu />
 		<v-content>
 		   <v-container fluid>
-		        <!-- <router-view></router-view> -->
+		        <router-view></router-view>
 		    </v-container>
 	     </v-content>  
      </div>
 </template>
 
 <script>
-    import Menu from './template/Menu'
+    // import Menu from './template/Menu'
+    import Menu from './auth/Auth'
 
     export default {
         name: 'App',
