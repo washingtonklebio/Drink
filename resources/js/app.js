@@ -3,6 +3,7 @@ require('./bootstrap')
 window.axios = require("axios")
 window.Vue = require('vue')
 
+import './config/msgs'
 import store from './config/store'
 import router from './config/router'
   

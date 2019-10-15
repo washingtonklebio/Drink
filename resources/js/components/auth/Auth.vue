@@ -13,7 +13,7 @@
 									<v-text-field v-if="showSignup" v-model="user.name" label="Nome" name="nome" prepend-icon="person" type="text"></v-text-field>
 									<v-text-field v-model="user.email" label="Email" name="email" prepend-icon="mail" type="text"></v-text-field>
 									<v-text-field v-model="user.password" id="password" label="Senha" name="password" prepend-icon="lock" type="password"></v-text-field>
-									<v-text-field v-if="showSignup" v-model="user.password_confirmation" id="password" label="Confirmar senha" name="password_confirmation" prepend-icon="lock" type="password"></v-text-field>
+									<v-text-field v-if="showSignup" v-model="user.c_password" label="Confirmar senha" name="password_confirmation" prepend-icon="lock" type="password"></v-text-field>
 								</v-form>
 							</v-card-text>
 							<v-card-actions>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-	import { userKey, baseApiUrl } from '../../global'
+	import { userKey, baseApiUrl, showError } from '../../global'
 	import axios from 'axios'
 
 	export default {
@@ -56,11 +56,12 @@
 			},
 			signup() {
 				axios.post(`${baseApiUrl}/signup`, this.user)
-					.then(() => {
+					.then(res => {
+						this.$toasted.global.defaultSuccess(res.data)
 						this.user = {}
 						this.showSignup = false
 					})
-					.catch(console.log('error'))
+					.catch(showError)
 			}
 		}
 	}
@@ -77,7 +78,7 @@
 
     .logo img {
         width: 8rem;
-        height: auto;
+        height: 4rem;
     }
 
     .v-card-login {
