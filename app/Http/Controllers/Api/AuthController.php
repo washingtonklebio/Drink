@@ -17,10 +17,18 @@ class AuthController extends Controller
         $this->validateLogin($request);
         
         $credentials = $this->credentials($request);
-
         $token = \JWTAuth::attempt($credentials);
+        
+        if ($token) {
+            $user = auth()->user();
+            $user['token'] = $token;
+            
+            return $user;
+        }
 
-        return $this->responseToken($token);
+        return response()->json([
+                'error' => \Lang::get('auth.failed')
+            ], 400);
     }
 
     public function signup (Request $request) {
@@ -55,12 +63,5 @@ class AuthController extends Controller
             
             return response()->json(['message' => 'Houve um erro ao criar usuário'], 500);
 		}
-    }
-
-    private function responseToken($token) {
-        return $token ? ['token' => $token] :
-            response()->json([
-                'error' => \Lang::get('auth.failed')
-            ], 400);
     }
 }

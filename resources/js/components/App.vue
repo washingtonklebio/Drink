@@ -10,12 +10,14 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
     // import Menu from './template/Menu'
     import Menu from './auth/Auth'
 
     export default {
         name: 'App',
-        components: { Menu }
+		components: { Menu},
+		computed: mapState(['user'])
     }
 </script>
 <style>

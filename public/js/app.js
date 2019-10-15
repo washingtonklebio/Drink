@@ -1923,7 +1923,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _auth_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth/Auth */ "./resources/js/components/auth/Auth.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _auth_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth/Auth */ "./resources/js/components/auth/Auth.vue");
 //
 //
 //
@@ -1935,13 +1936,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// import Menu from './template/Menu'
+ // import Menu from './template/Menu'
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
   components: {
-    Menu: _auth_Auth__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
+    Menu: _auth_Auth__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['user'])
 });
 
 /***/ }),
@@ -2007,14 +2010,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("".concat(_global__WEBPACK_IMPORTED_MODULE_0__["baseApiUrl"], "/signin"), this.user).then(function (res) {
+        _this.$toasted.global.defaultSuccess(res.data);
+
         _this.$store.commit('setUser', res.data);
 
         localStorage.setItem(_global__WEBPACK_IMPORTED_MODULE_0__["userKey"], JSON.stringify(res.data));
 
         _this.$router.push({
-          path: '/'
+          path: '/auth'
         });
-      })["catch"](console.log('error'));
+      })["catch"](_global__WEBPACK_IMPORTED_MODULE_0__["showError"]);
     },
     signup: function signup() {
       var _this2 = this;
@@ -98284,8 +98289,7 @@ new Vue({
   vuetify: new vuetify__WEBPACK_IMPORTED_MODULE_8___default.a(),
   render: function render(h) {
     return h(app);
-  },
-  mounted: function mounted() {}
+  }
 }).$mount('#app');
 
 /***/ }),
@@ -98633,28 +98637,27 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
-    // user: {
-    //     name: 'washington', 
-    //     email: 'washingtonkle@gmail.com'
-    // }
     user: null
   },
-  mulations: {
+  mutations: {
     setUser: function setUser(state, user) {
       state.user = user;
 
       if (user) {
-        axios.defaults.headers.common['Authorization'] = "bearer ".concat(user.token);
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = "bearer ".concat(user.token);
       } else {
-        delete axios.defaults.headers.common['Authorization'];
+        delete axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'];
       }
     }
   }
@@ -98677,9 +98680,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 
-var userKey = '__knowledge_user';
+var userKey = '__drink_user';
 var baseApiUrl = 'http://localhost:8080/api';
-function showError() {
+function showError(e) {
+  console.log(e);
   vue__WEBPACK_IMPORTED_MODULE_0___default.a.toasted.global.defaultError();
 }
 /* harmony default export */ __webpack_exports__["default"] = ({
