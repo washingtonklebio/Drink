@@ -1,12 +1,10 @@
 <template>
-	<div data-app="true">
+	<v-app>
 		<Menu v-if="user"/>
 		<v-content>
-		   <v-container fluid>
-		        <router-view></router-view>
-		    </v-container>
-	     </v-content>  
-     </div>
+		    <router-view></router-view>
+	    </v-content>  
+	</v-app>
 </template>
 
 <script>
@@ -21,7 +19,7 @@
 </script>
 <style>
 	* {
-		font-family: 'RobotoMono', monospace;
+		font-family: 'lato', monospace;
 	} 
 
 	body {

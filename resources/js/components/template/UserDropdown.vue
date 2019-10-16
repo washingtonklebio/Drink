@@ -1,7 +1,7 @@
 <template>
     <div class="user-dropdown">
         <div class="user-button">
-            <span>{{ user.name }}</span>
+            <span>{{ firstName }}</span>
             <div class="user-dropdown-img">
                 <Gravatar :email="user.email" alt="Usuário" />
             </div>
@@ -20,6 +20,11 @@ import { userKey } from '../../global';
 
 export default {
     name: 'UserDropdown',
+    data() {
+        return {
+            firstName: this.$store.state.user.name.split(' ')[0]
+        }
+    },
     components: { Gravatar },
     computed: mapState(['user']),
     methods: {
@@ -32,7 +37,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .user-dropdown {
         position: relative;
         height: 115%;
@@ -86,13 +91,17 @@ export default {
 
     .user-dropdown-content a {
         text-decoration: none;
-        color: #000 !important;
+        color: rgba(0, 0, 0, 0.87) !important;
         padding: 10px;
     }
 
     .user-dropdown-content a:hover {
         text-decoration: none;
-        color: #000;
+        color: rgba(0, 0, 0, 0.87) !important;
         background-color: #EDEDED;
+    }
+
+    .user-dropdown-content i {
+        color:  rgba(0,0,0,.54) !important;
     }
 </style>
