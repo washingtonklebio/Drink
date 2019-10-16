@@ -1,6 +1,6 @@
 <template>
 	<div data-app="true">
-		<Menu />
+		<Menu v-if="user"/>
 		<v-content>
 		   <v-container fluid>
 		        <router-view></router-view>
@@ -11,8 +11,7 @@
 
 <script>
 	import { mapState } from 'vuex'
-    // import Menu from './template/Menu'
-    import Menu from './auth/Auth'
+    import Menu from './template/Menu'
 
     export default {
         name: 'App',

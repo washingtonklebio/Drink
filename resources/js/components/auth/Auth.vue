@@ -48,10 +48,9 @@
 			signin() {
 				axios.post(`${baseApiUrl}/signin`, this.user)
 					.then(res => {
-						this.$toasted.global.defaultSuccess(res.data)
 						this.$store.commit('setUser', res.data)
 						localStorage.setItem(userKey, JSON.stringify(res.data))
-						this.$router.push({ path: '/auth' })
+						this.$router.push({ path: '/home' })
 					})
 					.catch(showError)
 			},
