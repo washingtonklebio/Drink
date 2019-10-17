@@ -15,15 +15,15 @@ import VueRouter from "vue-router"
 import Vuetify from 'vuetify'
 
 
-const app = Vue.component('App', require('./components/App').default)
+const App = Vue.component('App', require('./components/App').default)
 
 Vue.use(VueRouter)
 Vue.use(Vuetify)
-Vue.use(Vuetify,{ iconfont: 'mdi' })
+Vue.use(Vuetify,{ iconfont: 'fa4' })
 
 new Vue({
     store,
     router,
     vuetify: new Vuetify(),
-    render: h => h(app),
+    render: h => h(App),
 }).$mount('#app')

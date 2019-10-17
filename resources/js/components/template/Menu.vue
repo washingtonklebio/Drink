@@ -71,8 +71,8 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: "home", text: "Dashboard", route: "home" },
-      { icon: "chat_bubble", text: "Feedback", route: "auth" },
+      { icon: "fa fa-home", text: "Dashboard", route: "home" },
+      { icon: "fa fa-beer", text: "Refrigerante", route: "refrigerante" },
       { icon: "help", text: "Ajuda", route: "teste" }
     ]
   })

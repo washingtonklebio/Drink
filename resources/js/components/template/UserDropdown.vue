@@ -22,7 +22,7 @@ export default {
     name: 'UserDropdown',
     data() {
         return {
-            firstName: this.$store.state.user.name.split(' ')[0]
+            firstName: this.getFirstName()
         }
     },
     components: { Gravatar },
@@ -32,6 +32,14 @@ export default {
             localStorage.removeItem(userKey)
             this.$store.commit('setUser', null)
             this.$router.push({ name: 'auth' })
+        },
+        getFirstName() {
+            const name = this.$store.state.user.name
+
+            if (name) {
+                return name.split(' ')[0]
+            }
+            return ''
         }
     }
 }

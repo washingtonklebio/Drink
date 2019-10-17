@@ -9,12 +9,25 @@
 
 <script>
 	import { mapState } from 'vuex'
+	import { userKey } from '../global'
     import Menu from './template/Menu'
 
     export default {
         name: 'App',
 		components: { Menu},
-		computed: mapState(['user'])
+		computed: mapState(['user']),
+		methods: {
+			setStorageUser() {
+				const userStorage = localStorage.getItem(userKey)
+				
+				if (userStorage) {
+					this.$store.commit('setUser', JSON.parse(userStorage))
+				}
+			}
+		},
+		mounted() {
+			this.setStorageUser()
+		}
     }
 </script>
 <style>

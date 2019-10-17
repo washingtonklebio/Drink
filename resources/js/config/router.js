@@ -5,6 +5,7 @@ import { userKey } from '../global'
 
 import Auth from '../components/auth/Auth'
 import Home from '../components/home/Home'
+import Refrigerante from '../components/refrigerante/Refrigerante'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [{
   name: 'home',
   path: '/home',
   component: Home,
+  meta: { requiresSession: true }
+},{
+  name: 'refrigerante',
+  path: '/refrigerante',
+  component: Refrigerante,
   meta: { requiresSession: true }
 }]
 
