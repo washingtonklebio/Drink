@@ -35,7 +35,7 @@
             </v-list-item>
           </v-list-group>
           <router-link class="content-itens" v-else :key="item.text" :to="item.route">
-            <v-list-item class="item">
+            <v-list-item class="item" :class="takeCurrentRouteName(item.route)">
               <v-list-item-action>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-action>
@@ -75,7 +75,14 @@ export default {
       { icon: "fa fa-beer", text: "Refrigerante", route: "refrigerante" },
       { icon: "help", text: "Ajuda", route: "teste" }
     ]
-  })
+  }),
+  methods: {
+    takeCurrentRouteName(currentRoute) {
+      if (this.$route.name === currentRoute){
+        return 'active-menu';
+      }
+    }
+  }
 };
 </script>
 <style scoped>
@@ -92,7 +99,7 @@ export default {
 }
 
 .content-itens .item {
-  border-left: 5px solid #ededed !important;
+  border-left: 5px solid #ededed;
 }
 
 .content-itens .item:hover {
@@ -102,5 +109,10 @@ export default {
 
 .v-list-item__title {
   font-size: 15px !important;
+}
+
+.active-menu {
+  background-color: #ededed !important;
+  border-left: 5px solid rgba(25, 118, 210, 1) !important;
 }
 </style>
