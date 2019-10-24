@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-use App\Model\User; 
+use App\Models\User; 
 
 class AuthController extends Controller
 {
@@ -57,11 +57,11 @@ class AuthController extends Controller
                 return response()->json(['message'=>$validator->errors()], 401);            
             }
 
-            $user = new User([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]);
+            $user = new User;
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
            
             $user->save();
             
