@@ -7,14 +7,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-use App\User; 
+use App\Model\User; 
 
 class AuthController extends Controller
 {
     use AuthenticatesUsers;
 
     public function signin (Request $request) {
-        $this->validateLogin($request);
+
+        $validator = Validator::make($request->all(), [ 
+            'email' => 'required|email', 
+            'password' => 'required', 
+        ]);
+
+        if ($validator->fails()) {
+            $errors = json_decode($validator->errors());
+            $response = array_key_exists('email', $errors) ? 
+            $errors->email : $errors->password;           
+
+            return response()->json(['message' => $response], 422);            
+        }
         
         $credentials = $this->credentials($request);
         $token = \JWTAuth::attempt($credentials);
@@ -27,7 +39,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-                'error' => \Lang::get('auth.failed')
+                'message' => \Lang::get('auth.failed')
             ], 400);
     }
 

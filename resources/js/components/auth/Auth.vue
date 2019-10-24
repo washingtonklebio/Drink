@@ -52,7 +52,9 @@
 						localStorage.setItem(userKey, JSON.stringify(res.data))
 						this.$router.push({ path: '/home' })
 					})
-					.catch(showError)
+					.catch(error => {
+						showError(error)
+					})
 			},
 			signup() {
 				axios.post(`${baseApiUrl}/signup`, this.user)
