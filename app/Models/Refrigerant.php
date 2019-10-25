@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Refrigerant extends Model
 {
     public function flavor(){
-        return $this->belongsTo('App\Model\Flavor', 'flavor');
+        return $this->belongsTo(Flavor::class, 'flavor');
     }
 
     public function type(){
-        return $this->belongsTo('App\Model\Type', 'type');
+        return $this->belongsTo(Type::class, 'type');
     }
 
     public function liter(){
-        return $this->belongsTo('App\Model\Liter', 'liter');
+        return $this->belongsTo(Liter::class, 'liter');
     }
 }

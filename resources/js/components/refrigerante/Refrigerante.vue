@@ -19,12 +19,16 @@
           </v-text-field>
       </v-card-title>
       <v-data-table
+        v-model="selected"
         :headers="headers"
         :search="search"
         :items="desserts"
+        :single-select="singleSelect"
         :page.sync="page"
         :items-per-page="itemsPerPage"
         hide-default-footer
+        item-key="marca"
+        show-select
         class="elevation-1"
         @page-count="pageCount = $event"
       ></v-data-table>
@@ -71,9 +75,11 @@
     components: { Modal },
     data () {
       return {
+        singleSelect: false,
+        selected: [],
         page: 1,
         pageCount: 0,
-        itemsPerPage: 1,
+        itemsPerPage: 10,
         search: "",
         titleModal: 'Adicionar',
         iconModal: 'fa fa-pencil-square-o',

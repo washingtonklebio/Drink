@@ -7,7 +7,7 @@
 						<v-card class="elevation-12 v-card-login">
 							<v-card-text>
 								<v-row class="logo">
-									<img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+									<img :src="img" alt="logo">
 								</v-row>
 								<v-form>
 									<v-text-field v-if="showSignup" v-model="user.name" label="Nome" name="nome" prepend-icon="person" type="text"></v-text-field>
@@ -17,8 +17,8 @@
 								</v-form>
 							</v-card-text>
 							<v-card-actions>
-								<v-btn v-if="showSignup" @click="signup" block color="primary" dark>Registrar</v-btn>
-								<v-btn v-else @click="signin" block color="primary" dark>Login</v-btn>
+								<v-btn v-if="showSignup" @click="signup" block color="primary" dark :loading="loader">Registrar</v-btn>
+								<v-btn v-else @click="signin" block color="primary" dark :loading="loader">Login</v-btn>
 							</v-card-actions>
 							<div class="forgot-password">
 								<a @click.prevent="showSignup = !showSignup" v-if="showSignup">Já tem cadastro? Logar</a>
@@ -35,17 +35,21 @@
 <script>
 	import { userKey, baseApiUrl, showError } from '../../global'
 	import axios from 'axios'
+	import logo from '../../img/drink.png'
 
 	export default {
 		name: 'Auth',
 		data() {
 			return {
 				showSignup: false,
-				user: {}
+				loader: false,
+				img: logo,
+				user: {},
 			}
 		},
 		methods: {
 			signin() {
+				this.loader = true
 				axios.post(`${baseApiUrl}/signin`, this.user)
 					.then(res => {
 						this.$store.commit('setUser', res.data)
@@ -54,18 +58,23 @@
 					})
 					.catch(error => {
 						showError(error)
+						this.loader = false
 					})
 			},
 			signup() {
+				this.loader = true
 				axios.post(`${baseApiUrl}/signup`, this.user)
 					.then(res => {
 						this.$toasted.global.defaultSuccess(res.data)
 						this.user = {}
 						this.showSignup = false
 					})
-					.catch(showError)
+					.catch(error => {
+						showError(error)
+						this.loader = false
+					})
 			}
-		}
+		},
 	}
 </script>
 <style scoped>
@@ -76,15 +85,16 @@
     .logo {
         display: flex;
         justify-content: center;
+		margin-bottom: 2rem;
     }
 
     .logo img {
-        width: 8rem;
-        height: 4rem;
+        width: 7rem;
+        height: 7rem;
     }
 
     .v-card-login {
-        padding: 2rem 1rem 2rem;
+        padding: 10px 1rem 2rem;
         border-radius: 2rem;
     }
     .forgot-password {
