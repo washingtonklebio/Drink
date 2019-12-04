@@ -73,7 +73,6 @@ export default {
     items: [
       { icon: "fa fa-home", text: "Dashboard", route: "home" },
       { icon: "fa fa-beer", text: "Refrigerante", route: "refrigerante" },
-      { icon: "help", text: "Ajuda", route: "teste" }
     ]
   }),
   methods: {

@@ -67,11 +67,13 @@ class RefrigerantController extends Controller
         $refrigerant->quantity = $quantity;
         $refrigerant->amount = $amount;
 
-        if ($refrigerant->save()) {
+        try {
+            $refrigerant->save();
             return response(['message' => 'Refrigerante cadastrado com sucesso'], 200);
-        } 
+        } catch (\PDOException $e) {
+            return response()->json(['message' => 'Ocorreu um erro ao adicionar refrigerante'], 500);  
+        }
 
-        return response()->json(['message' => 'Ocorreu um erro ao adicionar refrigerante'], 500);  
     }
 
     /**
@@ -103,7 +105,7 @@ class RefrigerantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Refrigerant $refrigerant, Request $request)
     {
         $mark = $request->input('mark');
         $liter = $request->input('liter');
@@ -125,12 +127,6 @@ class RefrigerantController extends Controller
             return response()->json(['message' => 'Dados inválidos, tente novamente'], 400);            
         }
 
-        $refrigerant = Refrigerant::where('id', $id)->first();
-
-        if (!$refrigerant) {
-            return response()->json(['message' => 'Refrigerante não encontrado, tente novamente'], 404);
-        }
-
         $refrigerant->mark = $mark;
         $refrigerant->liter = $liter;
         $refrigerant->type = $type;
@@ -138,13 +134,13 @@ class RefrigerantController extends Controller
         $refrigerant->quantity = $quantity;
         $refrigerant->amount = $amount;
 
-
-        if ($refrigerant->save()) {
+        try {
+            $refrigerant->save();
             return response(['message' => 'Refrigerante atualizado com sucesso'], 200);
+        } catch(\PDOException $e) {
+            return response()->json(['message' => 'Não foi possível atualizar refrigerante,
+            verifique se já existe refrigerante com essa marca/litragem já cadastrado'], 500); 
         }
-
-        return response()->json(['message' => 'Não foi possível atualizar refrigerante,
-        verifique se já existe refrigerante com essa marca/litragem já cadastrado'], 500); 
     }
 
     /**
@@ -153,12 +149,16 @@ class RefrigerantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $deleted = Refrigerant::where('id', $id)->delete();
-        
-        if ($deleted) {
+    public function destroy(Refrigerant $refrigerant)
+    { 
+        if ($refrigerant->delete()) {
             return response(['message' => 'Refrigerante removido com sucesso'], 200);
         }
+    }
+
+    public function totalRefrigerant()
+    {
+        $totalRefrigerant = Refrigerant::All()->sum('quantity');
+        return response($totalRefrigerant, 200);
     }
 }
