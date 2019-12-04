@@ -9,7 +9,7 @@
 3. Configurar o arquivo **.env.example** renomear para **.env** e editar os seguintes campos:
 
 
-	DB_HOST=mysql-app
+	```DB_HOST=mysql-app
 
 	DB_PORT=3306
 
@@ -17,7 +17,7 @@
 
 	DB_USERNAME=root
 
-	DB_PASSWORD=1q2w3e4r 
+	DB_PASSWORD=1q2w3e4r
 
 4. Rodar o comando ```docker-compose up --build```
 
