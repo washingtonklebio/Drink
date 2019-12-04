@@ -68,6 +68,7 @@
 						this.$toasted.global.defaultSuccess(res.data)
 						this.user = {}
 						this.showSignup = false
+						this.loader = false
 					})
 					.catch(error => {
 						showError(error)

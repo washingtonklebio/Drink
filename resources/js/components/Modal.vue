@@ -12,7 +12,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click.stop="show=false">Salvar</v-btn>
+        <v-btn color="primary" @click.prevent="send" @click.stop="show=false">Salvar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -34,6 +34,11 @@ export default {
         this.$emit("input", value);
       }
     }
+  },
+  methods: {
+    send() {
+      this.$emit('save')
+    }
   }
 };
 </script>
@@ -42,7 +47,7 @@ export default {
     position: absolute;
     right: 10px;
     top: 10px;
-    font-size: 1.2rem;
+    font-size: 13px;
     font-weight: 600;
     height: 20px;
     width: 20px;
@@ -50,5 +55,6 @@ export default {
     display: flex;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
   }
 </style>
