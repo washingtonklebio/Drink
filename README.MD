@@ -4,7 +4,7 @@
 
 1. Clonar o projeto: git clone https://github.com/washingtonklebio/Drink.git
 
-2. Entrar no diretório do projeto
+2. Entrar no diretório do projeto.
 
 3. Configurar o arquivo **.env.example** renomear para **.env** e editar os seguintes campos:
 
@@ -19,7 +19,7 @@
 
 	DB_PASSWORD=1q2w3e4r
 
- 4. Rodar o comando ```docker-compose up --build```
+ 4. Rodar o comando ```docker-compose up --build``` na pasta raiz do projeto.
 
  5. Caso as migrations e seeds não seja executada automaticamente, execute manualmente no container docker:
 
