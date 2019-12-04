@@ -21,15 +21,15 @@
 
  4. Rodar o comando ```docker-compose up --build```
 
- 5.Caso as migrations e seeds não seja executada automaticamente, execute manualmente no container docker:
+ 5. Caso as migrations e seeds não seja executada automaticamente, execute manualmente no container docker:
 
- ```docker exec -ti drink_app_1 bash```
+	 ```docker exec -ti drink_app_1 bash```
 
- Dentro da máquina execute:
+	 Dentro da máquina execute:
 
- ```php artisan migrate```
+	 ```php artisan migrate```
 
- ```php artisan db:seed```
+	 ```php artisan db:seed```
 
 
- O **passo 5** só precisa ser feito caso o arquivo ```docker-entrypoint.sh``` por algum motivo não consiga executar  **automaticamente** esses comandos. Para saber se foi executado é possível acompanhar o log após executar o **passo 4**.
+	 O **passo 5** só precisa ser feito caso o arquivo ```docker-entrypoint.sh``` por algum motivo não consiga executar  **automaticamente** esses comandos. Para saber se foi executado é possível acompanhar o log após executar o **passo 4**.
