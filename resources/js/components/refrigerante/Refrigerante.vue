@@ -28,16 +28,16 @@
         :page.sync="page"
         :items-per-page="itemsPerPage"
         hide-default-footer
-        item-key="marca"
+        item-key="id"
         show-select
         class="elevation-1"
         @page-count="pageCount = $event"
       >
-        <template v-slot:item.action>
-          <Actions @edit='edit("teste")' @remove='remove("teste")'></Actions>
+        <template v-slot:item.action="{ item }">
+          <Actions @edit="edit(item)" @remove="remove(item)"></Actions>
         </template>
         <template v-slot:no-data>
-          <h3>teste</h3>
+          <h3>Nenhum refrigerante cadastrado</h3>
         </template>
       </v-data-table>
       <div class="text-center pt-2">
@@ -177,7 +177,6 @@ export default {
   },
   methods: {
     save() {
-      console.log(this.refrigerant)
       const method = this.refrigerant.id ? 'put' : 'post'
       const id = this.refrigerant.id ? `/${this.refrigerant.id}` : ''
       
@@ -190,11 +189,55 @@ export default {
           showError(error)
         })
     },
+    edit(data) {
+
+      this.titleModal = 'Editar'
+      const dataRefrigerant = this.desserts.find(element => element.id == data.id)
+
+      this.refrigerant.id = dataRefrigerant.id
+      this.refrigerant.mark = dataRefrigerant.mark
+      this.refrigerant.liter = dataRefrigerant.id
+      this.refrigerant.quantity = dataRefrigerant.quantity
+      this.refrigerant.flavor = dataRefrigerant.id
+      this.refrigerant.type = dataRefrigerant.id
+      this.refrigerant.amount = dataRefrigerant.amount
+
+      this.showModal = true
+    },
+    remove(data) {
+      let toast = this.$toasted.show("Deseja realmente excluir isso?", { 
+        theme: "bubble", 
+        position: "top-center", 
+        duration : null,
+        action : [
+          {
+            text : 'Sim',
+            onClick : (e, toastObject) => {
+              axios.delete(`${baseApiUrl}/refrigerant/${data.id}`)
+              .then(res => {
+                this.$toasted.global.defaultSuccess(res.data)
+                this.getRefrigerant()
+              })
+              .catch(error => {
+                showError(error)
+              })
+
+              toastObject.goAway(0);
+            }
+          },
+          {
+            text : 'Não',
+            onClick : (e, toastObject) => {
+              toastObject.goAway(0);
+            }
+          }
+        ],
+      });
+    },
     getRefrigerant() {
       axios.get(`${baseApiUrl}/refrigerant`)
         .then(res => {
           this.desserts = res.data
-          console.log(res.data)
         })
         .catch(error => {
           showError(error)
@@ -228,6 +271,7 @@ export default {
       })
     },
     resetModal() {
+      this.titleModal = 'Adicionar'
       this.refrigerant = {}
     }
   }

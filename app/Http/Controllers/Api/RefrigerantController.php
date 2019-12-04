@@ -105,7 +105,46 @@ class RefrigerantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mark = $request->input('mark');
+        $liter = $request->input('liter');
+        $type = $request->input('type');
+        $flavor = $request->input('flavor');
+        $quantity = $request->input('quantity');
+        $amount = $request->input('amount');
+
+        $validator = Validator::make($request->all(), [ 
+            'mark' => 'required|string', 
+            'liter' => 'required', 
+            'type' => 'required|int',
+            'flavor' => 'required|int',
+            'quantity' => 'required|int',
+            'amount' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Dados inválidos, tente novamente'], 400);            
+        }
+
+        $refrigerant = Refrigerant::where('id', $id)->first();
+
+        if (!$refrigerant) {
+            return response()->json(['message' => 'Refrigerante não encontrado, tente novamente'], 404);
+        }
+
+        $refrigerant->mark = $mark;
+        $refrigerant->liter = $liter;
+        $refrigerant->type = $type;
+        $refrigerant->flavor = $flavor;
+        $refrigerant->quantity = $quantity;
+        $refrigerant->amount = $amount;
+
+
+        if ($refrigerant->save()) {
+            return response(['message' => 'Refrigerante atualizado com sucesso'], 200);
+        }
+
+        return response()->json(['message' => 'Não foi possível atualizar refrigerante,
+        verifique se já existe refrigerante com essa marca/litragem já cadastrado'], 500); 
     }
 
     /**
@@ -116,6 +155,10 @@ class RefrigerantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleted = Refrigerant::where('id', $id)->delete();
+        
+        if ($deleted) {
+            return response(['message' => 'Refrigerante removido com sucesso'], 200);
+        }
     }
 }
