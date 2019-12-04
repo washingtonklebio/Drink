@@ -37,3 +37,15 @@
 	 O projeto será executado localmente na porta 8080: **localhost:8080**
 	 
 	 Portas usadas da máquina local: **8080, 3377** caso alguma dessas portas esteja sendo usada, basta adicionar outras portas no arquivo **docker-compose.yaml** e **Dockerfile**.
+
+![Alt text](public/images/1.png?raw=true "Tela de login")
+
+![Alt text](public/images/2.png?raw=true "Tela de Registro")
+
+![Alt text](public/images/3.png?raw=true "Dashboard")
+
+![Alt text](public/images/4.png?raw=true "Tela de refrigerantes")
+
+![Alt text](public/images/5.png?raw=true "Modal de cadastro/edição de refrigerantes")
+
+![Alt text](public/images/6.png?raw=true "Dashboard com menu recolhido")
