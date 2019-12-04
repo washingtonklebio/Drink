@@ -1,5 +1,7 @@
 # **SPA - Sistema de gestão de refrigerantes**
 
+### Tecnologias: Vue.js, Vuex, Vue router, Vuetify, Vue toasted, Gravatar, Laravel 5.8.
+
 **Instalação:**
 
 1. Clonar o projeto: git clone https://github.com/washingtonklebio/Drink.git
