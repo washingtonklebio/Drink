@@ -33,3 +33,7 @@
 
 
 	 O **passo 5** só precisa ser feito caso o arquivo ```docker-entrypoint.sh``` por algum motivo não consiga executar  **automaticamente** esses comandos. Para saber se foi executado é possível acompanhar o log após executar o **passo 4**.
+	 
+	 O projeto será executado localmente na porta 8080: **localhost:8080**
+	 
+	 Portas usadas da máquina local: **8080, 3377** caso alguma dessas portas esteja sendo usada, basta adicionar outras portas no arquivo **docker-compose.yaml** e **Dockerfile**.
