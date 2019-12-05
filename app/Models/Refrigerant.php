@@ -9,6 +9,8 @@ class Refrigerant extends Model
 {
     protected $table = 'refrigerant';
 
+    protected $fillable = ['mark', 'liter', 'type', 'flavor', 'quantity', 'amount',];
+
     public function flavor() {
         return $this->belongsTo(Flavor::class, 'flavor');
     }

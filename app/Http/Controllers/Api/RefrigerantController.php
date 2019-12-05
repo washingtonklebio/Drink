@@ -7,6 +7,7 @@ use App\Models\Refrigerant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Services\RefrigerantService;
 
 class RefrigerantController extends Controller
 {
@@ -15,20 +16,9 @@ class RefrigerantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RefrigerantService $service)
     {
-        $refrigerant = Refrigerant::with('flavor', 'type', 'liter')->get();
-        return response()->json($refrigerant, 200);   
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
+        return response()->json($service->index(), 200);   
     }
 
     /**
@@ -37,14 +27,8 @@ class RefrigerantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, RefrigerantService $service)
     {
-        $mark = $request->input('mark');
-        $liter = $request->input('liter');
-        $type = $request->input('type');
-        $flavor = $request->input('flavor');
-        $quantity = $request->input('quantity');
-        $amount = $request->input('amount');
         
         $validator = Validator::make($request->all(), [ 
             'mark' => 'required|string', 
@@ -59,43 +43,11 @@ class RefrigerantController extends Controller
             return response()->json(['message' => 'Dados inválidos, tente novamente'], 400);            
         }
         
-        $refrigerant = new Refrigerant();
-        $refrigerant->mark = $mark;
-        $refrigerant->liter = $liter;
-        $refrigerant->type = $type;
-        $refrigerant->flavor = $flavor;
-        $refrigerant->quantity = $quantity;
-        $refrigerant->amount = $amount;
-
-        try {
-            $refrigerant->save();
-            return response(['message' => 'Refrigerante cadastrado com sucesso'], 200);
-        } catch (\PDOException $e) {
+        if (!$service->save($request->all())) {
             return response()->json(['message' => 'Ocorreu um erro ao adicionar refrigerante'], 500);  
         }
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response(['message' => 'Refrigerante cadastrado com sucesso'], 200);
     }
 
     /**
@@ -105,14 +57,8 @@ class RefrigerantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Refrigerant $refrigerant, Request $request)
+    public function update($id, Request $request, RefrigerantService $service)
     {
-        $mark = $request->input('mark');
-        $liter = $request->input('liter');
-        $type = $request->input('type');
-        $flavor = $request->input('flavor');
-        $quantity = $request->input('quantity');
-        $amount = $request->input('amount');
 
         $validator = Validator::make($request->all(), [ 
             'mark' => 'required|string', 
@@ -126,21 +72,13 @@ class RefrigerantController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Dados inválidos, tente novamente'], 400);            
         }
-
-        $refrigerant->mark = $mark;
-        $refrigerant->liter = $liter;
-        $refrigerant->type = $type;
-        $refrigerant->flavor = $flavor;
-        $refrigerant->quantity = $quantity;
-        $refrigerant->amount = $amount;
-
-        try {
-            $refrigerant->save();
-            return response(['message' => 'Refrigerante atualizado com sucesso'], 200);
-        } catch(\PDOException $e) {
+        
+        if (!$service->update($id, $request->all())) {
             return response()->json(['message' => 'Não foi possível atualizar refrigerante,
             verifique se já existe refrigerante com essa marca/litragem já cadastrado'], 500); 
         }
+
+        return response(['message' => 'Refrigerante atualizado com sucesso'], 200);;
     }
 
     /**
@@ -149,16 +87,17 @@ class RefrigerantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Refrigerant $refrigerant)
+    public function destroy($id,  RefrigerantService $service)
     { 
-        if ($refrigerant->delete()) {
-            return response(['message' => 'Refrigerante removido com sucesso'], 200);
+        if (!$service->destroy($id)) {
+            return response(['message' => 'Ocorreu um erro ao remover refrigerante'], 200);
         }
+        
+        return response(['message' => 'Refrigerante removido com sucesso'], 200);
     }
 
-    public function totalRefrigerant()
+    public function totalRefrigerant(RefrigerantService $service)
     {
-        $totalRefrigerant = Refrigerant::All()->sum('quantity');
-        return response($totalRefrigerant, 200);
+        return response($service->totalRefrigerant(), 200);
     }
 }
