@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-alert
-      v-if="!desserts"
+      v-if="desserts.length < 1"
       border="left"
       colored-border
       type="info"
@@ -35,9 +35,6 @@
       >
         <template v-slot:item.action="{ item }">
           <Actions @edit="edit(item)" @remove="remove(item)"></Actions>
-        </template>
-        <template v-slot:no-data>
-          <h3>Nenhum refrigerante cadastrado</h3>
         </template>
       </v-data-table>
       <div class="text-center pt-2">
