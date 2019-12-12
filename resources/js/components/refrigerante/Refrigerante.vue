@@ -41,7 +41,7 @@
         <v-pagination v-model="page" :length="pageCount"></v-pagination>
       </div>
     </v-card>
-    <v-btn bottom color="primary" dark fab fixed right @click="resetModal" @click.stop="showModal=true">
+    <v-btn bottom color="primary" dark fab fixed right @click="resetModal('Adicionar', 'fa fa-plus')" @click.stop="showModal=true">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <Modal v-model="showModal" :header="titleModal" :headerIcon="iconModal" @save="save">
@@ -89,8 +89,8 @@ export default {
       pageCount: 0,
       itemsPerPage: 5,
       search: "",
-      titleModal: "Adicionar",
-      iconModal: "fa fa-pencil-square-o",
+      titleModal: "",
+      iconModal: "",
       showModal: false,
       liters: [],
       types: [],
@@ -188,15 +188,15 @@ export default {
     },
     edit(data) {
 
-      this.titleModal = 'Editar'
+      this.resetModal('Editar', 'fa fa-pencil-square-o')
       const dataRefrigerant = this.desserts.find(element => element.id == data.id)
 
       this.refrigerant.id = dataRefrigerant.id
       this.refrigerant.mark = dataRefrigerant.mark
-      this.refrigerant.liter = dataRefrigerant.id
+      this.refrigerant.liter = dataRefrigerant.liter.id
       this.refrigerant.quantity = dataRefrigerant.quantity
-      this.refrigerant.flavor = dataRefrigerant.id
-      this.refrigerant.type = dataRefrigerant.id
+      this.refrigerant.flavor = dataRefrigerant.flavor.id
+      this.refrigerant.type = dataRefrigerant.type.id
       this.refrigerant.amount = dataRefrigerant.amount
 
       this.showModal = true
@@ -267,8 +267,9 @@ export default {
         showError(error)
       })
     },
-    resetModal() {
-      this.titleModal = 'Adicionar'
+    resetModal(title, icon) {
+      this.titleModal = title
+      this.iconModal = icon
       this.refrigerant = {}
     }
   }
