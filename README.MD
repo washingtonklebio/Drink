@@ -11,7 +11,7 @@
 3. Configurar o arquivo **.env.example** renomear para **.env** e editar os seguintes campos:
 
 
-	```DB_HOST=mysql-app
+	DB_HOST=mysql-app
 
 	DB_PORT=3306
 
